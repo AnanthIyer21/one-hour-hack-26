@@ -1,0 +1,15 @@
+# whack() leaves a file called "whack" wherever it runs, so keep those out of pull requests
+whack
+!whack/
+
+# build output
+__pycache__/
+node_modules/
+*.class
+*.o
+*.out
+*.exe
+*.hi
+target/
+dist-newstyle/
+.DS_Store
