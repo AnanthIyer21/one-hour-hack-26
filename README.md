@@ -6,7 +6,7 @@ The winner takes home a **mini projector**
 
 ## The prompt
 
-> **Most creative use of the `whack()` function.**
+### **Most creative use of the `whack()` function.**
 
 Everyone gets the same function. What you build around it is up to you.
 
