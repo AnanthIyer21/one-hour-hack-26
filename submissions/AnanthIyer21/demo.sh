@@ -7,7 +7,7 @@ REPO="$BASE/hackathon-project"
 REMOTE="$BASE/remote.git"
 
 export ROULETTE_NONINTERACTIVE=1
-export ROULETTE_DUCK_ANSWER="${ROULETTE_DUCK_ANSWER:-it turns random words into commit chaos, obviously}"
+export ROULETTE_DUCK_ANSWER="${ROULETTE_DUCK_ANSWER:-yes|idk|it makes every commit a roll of fate decided by whack()|it reroutes the goose away from prod}"
 
 git init -q --bare "$REMOTE"
 git init -q "$REPO"
