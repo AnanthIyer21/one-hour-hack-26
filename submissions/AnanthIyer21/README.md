@@ -6,9 +6,13 @@
 
 ## Screenshot
 
+![demo](demo.gif)
+
+*The reel spins, a goose steals the very first commit and leaves a ransom note, the Oculus wifi achieves sentience, and fate writes haiku out of the rolled words.*
+
 ![screenshot](screenshot.png)
 
-*A full `bash demo.sh` run: 11 commit attempts, 6 blocks, a goose, a fake segfault, a sponsored acquisition, and the saga it all turned into.*
+*A full `ROULETTE_SEED=2 bash demo.sh` run: 4 jackpots, 11 blocks, a goose heist, 3 haiku, 9 achievements, and the saga it all turned into.*
 
 ## How to run it
 
@@ -37,8 +41,8 @@ The words spin past like a fruit machine reel, slow down and land on your fate. 
 |---|---|---|---|
 | SHIPPED | push, deploy, prod, merge, commit | Celebration, commit goes through | Straight to prod |
 | CONFLICT | conflict | **BLOCKED**: "a goose has caused a merge conflict in your soul" | **BLOCKED** |
-| GOOSE | goose, honk | Message rewritten to `HONK HONK (originally: ...)` | The goose honks you off the premises |
-| RUBBER DUCK | duck, quack, rubber | Explain your change to the duck (15+ chars) or be **BLOCKED** | Quack of approval |
+| GOOSE | goose, honk | Message rewritten to `HONK HONK (originally: ...)`, or the goose **steals** it | The goose honks you off the premises |
+| RUBBER DUCK | duck, quack, rubber | The duck asks you a question. Give a weak answer and you are **BLOCKED** | Quack of approval |
 | SLEEP | sleep, midnight | You fall asleep on the keyboard (zzz), then it commits | Snores, then pushes |
 | SEGFAULT | segfault, null, pointer, stack, overflow, bug | Fake core dump with backtrace... "just kidding" | Fake crash, then pushes |
 | INCIDENT | incident, io | Declares an incident.io `INC-####` (SEV by drama) and tags the message | Incident "resolved" |
@@ -50,14 +54,33 @@ The words spin past like a fruit machine reel, slow down and land on your fate. 
 
 Blocked? Just try again. Fate never blocks you forever.
 
+## Even more ways for whack() to ruin your night
+
+- **🎰 Jackpots.** If the two highest-scoring fates form a known pair, they combine:
+  - **BIRD FIGHT** (goose + duck): they brawl over your commit. Blocked.
+  - **LATE NIGHT SLICE** (pizza + sleep): you face-plant into a pizza, and the commit goes through.
+  - **HOSTILE TAKEOVER** (sponsor + glory): your commit gets bought out.
+  - **TOTAL OUTAGE** (wifi + incident): a SEV0. Blocked.
+  - **CORRUPTED** (segfault + conflict): blocked.
+  - **YOLO DEPLOY** (chaos + shipped): STRAIGHT TO PROD.
+- **🪿 Goose heists.** A goose sometimes steals your commit or push outright and leaves a ransom note cut out of the rolled words: `WE HAVE YOUR COMMIT. SEND PUSh Duck hACk netcraFT. NO POLICE. HONK.`
+- **🪿 The goose stalks you.** Every goose you meet is counted. On the 5th, the geese move into your repo, and your next 3 commits get a `HONK` prefix.
+- **🦆 Duck interrogation.** The duck asks a real question ("Did you test it?") and judges the answer. Say "yes" and it calls you a LIAR, because nobody tests at a hackathon.
+- **🔥 Lucky streak.** After 3 lucky rolls in a row you get a HOT HAND: fate calls `whack()` *twice* for your next roll, so you get double the words, the drama and the art.
+- **📜 whack() haiku.** Survive an APOCALYPTIC roll and fate writes you a 5-7-5 haiku from the words it rolled (it counts the syllables). The haiku goes into your commit message body, forever.
+- **🔥 Commit roasts.** Before it spins, fate reads your commit message: `'fix' x2. Bold of you to assume any of them worked.`, `'final' x3. It is never final.`, `Committing at 23:58. The deadline can smell your fear.`
+- **📈 Absurd escalation.** On APOCALYPTIC rolls the goose sues you, the ducks unionise and Bloomberg halts trading on your repo.
+- **★ Achievements.** There are 12 to unlock: Goose Whisperer, Thrice Denied, Robbed, Accidental Poet, Hot Hand, JACKPOT!, Midnight Committer and more.
+
 ## The saga
 
 Every roll is logged to `.git/roulette/log.jsonl`. `story` turns it into an epic told from hand-written templates, with a chapter for every successful push and closing stats (attempts, blocks, geese met, fake crashes, minutes until your first successful push):
 
 > **Chapter 2: The Goose Wars**
-> ✗ At 23:00 you tried to commit 'fix bug in the bug fix'. A goose caused a merge conflict in your soul. Denied.
-> ✓ At 23:00 a goose waddled into the repo, ate 'fix bug in the bug fix' and left only honks behind.
-> ✗ At 23:00 a push was attempted. The Oculus wifi died. Nothing left the building.
+> ✗ At 23:14 'fix bug in the bug fix' segfaulted inside a merge conflict. JACKPOT of pain. The bytes are screaming. Fate's review: "'fix' x2. Bold of you to assume any of them worked."
+> ✗ At 23:14 'make the demo not crash' took down the wifi AND opened INC-9045. JACKPOT of pain. Total outage.
+> ✗ At 23:14 a goose STOLE 'make the demo not crash' and left a ransom note. The police were not informed.
+> ✓ At 23:14 the push went through. A duck quacked its blessing. The saga moves on.
 
 After each successful push, the newest chapter is printed right there in your terminal. It's all offline, with no API keys.
 
@@ -74,5 +97,5 @@ Yes.
 
 - `roulette.py` is the whole tool (install, uninstall, story and the hooks)
 - `whack.py` is the official function, unchanged
-- `demo.sh` is the non-interactive demo (`ROULETTE_SEED=1 bash demo.sh` reproduces the screenshot)
-- `render_screenshot.py` turns the ANSI demo output into `screenshot.png` (uses Pillow, only for the image)
+- `demo.sh` is the non-interactive demo (`ROULETTE_SEED=2 bash demo.sh` reproduces the screenshot)
+- `render_screenshot.py` and `render_gif.py` turn the coloured demo output into `screenshot.png` and `demo.gif` (they use Pillow, but only to make the images)

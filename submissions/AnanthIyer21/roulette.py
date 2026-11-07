@@ -278,7 +278,13 @@ def _tty(stream):
 OUT = sys.stderr
 COLOR = (os.environ.get("ROULETTE_FORCE_COLOR") == "1"
          or (_tty(OUT) and "NO_COLOR" not in os.environ))
-ANIMATE = _tty(OUT) and os.environ.get("ROULETTE_NO_ANIM") != "1"
+ANIMATE = ((_tty(OUT) or os.environ.get("ROULETTE_FORCE_ANIM") == "1")
+           and os.environ.get("ROULETTE_NO_ANIM") != "1")
+
+
+def _sleep(seconds):  # ROULETTE_FAST=1 keeps the animation frames but skips the waiting (for GIFs)
+    if os.environ.get("ROULETTE_FAST") != "1":
+        time.sleep(seconds)
 
 
 def c(text, code):
@@ -291,7 +297,7 @@ def say(text=""):
 
 def nap(seconds):
     if ANIMATE:
-        time.sleep(seconds)
+        _sleep(seconds)
 
 
 # ---------------------------------------------------------------- the roll
@@ -341,7 +347,7 @@ def spin(words, fate):
         line = f"  [ {w.upper():^11} ]  [ {random.choice(list(FATES)):^11} ]"
         OUT.write("\r" + c(line, "1;" + random.choice(list(COLOURS.values()))))
         OUT.flush()
-        time.sleep(delay)
+        _sleep(delay)
         total += delay
         delay *= 1.17
         if total > 1.8:
@@ -349,7 +355,7 @@ def spin(words, fate):
     land = f"  [ {'*' * 11} ]  [ {fate:^11} ]"
     OUT.write("\r" + c(land, "1;" + COLOURS[fate]) + "\n")
     OUT.flush()
-    time.sleep(0.3)
+    _sleep(0.3)
 
 
 def show_art(fate, drama):
@@ -389,10 +395,10 @@ def ask_tty(prompt):
         say(c(prompt, "33") + ans)
         return ans
     try:
-        with open("/dev/tty", "r+") as tty:
-            tty.write(prompt)
-            tty.flush()
-            return tty.readline().strip()
+        with open("/dev/tty") as tty_in, open("/dev/tty", "w") as tty_out:
+            tty_out.write(prompt)
+            tty_out.flush()
+            return tty_in.readline().strip()
     except OSError:
         ans = random.choice(os.environ.get("ROULETTE_DUCK_ANSWER", "").split("|"))
         say(c(prompt, "33") + ans + c("  (no tty, the duck reads your mind)", "2"))
@@ -474,7 +480,7 @@ def react_commit(fate, drama, counts, msg):
             while t < secs:
                 OUT.write(c(random.choice(["z", "Z", "zz", "Zz"]) + " ", "34"))
                 OUT.flush()
-                time.sleep(0.3)
+                _sleep(0.3)
                 t += 0.3
             OUT.write("\n")
         else:
